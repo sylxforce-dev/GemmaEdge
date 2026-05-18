@@ -1,0 +1,63 @@
+{
+  "misha-sovereign": [
+    "sovereign:", "who are you", "what are you", "about yourself", "what is gemmaedge", "what is misha",
+    "tell me about yourself", "explain yourself", "what does this do", "what is this system", "introduce yourself",
+    "what are your modules", "how do you work", "your architecture", "your identity", "your purpose",
+    "who built you", "who made you", "explain gemmaedge", "digital equity", "gtx 1050 ti", "4gb vram",
+    "hardware specs", "system design", "mountain architecture", "gemmaedge", "misha sovereign", "mishaselector",
+    "cold swap", "cold-swap", "miniLM", "specialist module", "local ai engine", "offline ai", "sovereign ai",
+    "vram guard", "architect mode", "warrior mode", "dual state", "your modules", "your system",
+    "your project", "this project", "this system", "your mission", "your creator", "your hardware",
+    "your design", "1050 ti", "i3 7100", "estonia", "hackathon", "kaggle", "deepmind", "gemma"
+  ],
+  "misha-oracle": [
+    "oracle:", "rng", "chance", "fortune", "luck", "probability", "odds", "gamble", "predict", "lucky", "unlucky",
+    "roll", "gacha", "star rail", "wuwa", "pull", "pulls", "drop rate", "percentage", "risk",
+    "soft pity", "hard pity", "guarantee", "banner", "winning", "losing", "bet", "dice", "pity level",
+    "50/50", "accumulative logic", "what are the odds", "calculate probability", "random number", "coin flip",
+    "will i get", "am i lucky", "how likely", "luck check", "fate", "destiny", "genshin", "honkai",
+    "wuthering waves", "summon", "wish", "draw", "loot", "drop chance", "fortune telling", "predict my"
+  ],
+  "misha-auditor": [
+    "auditor:", "resume", "salary", "interview", "hr", "headhunter", "linkedin", "hiring", "employment",
+    "portfolio", "contract", "clause", "cover letter", "cv", "job", "vacancy", "benefits", "career",
+    "review my resume", "check my cv", "good salary", "negotiate this offer", "job vacancy",
+    "software developer salary", "market rate", "job offer", "work experience", "job description",
+    "apply for", "application letter", "rejection", "job search", "freelance rate", "hourly rate",
+    "annual salary", "raise", "promotion", "performance review", "reference letter", "work contract",
+    "probation period", "notice period", "remote work", "hybrid work", "entry level", "junior", "senior",
+    "mid level", "tech job", "developer job", "it job", "audit this", "review this contract",
+    "is this fair", "is this salary good"
+  ],
+  "misha-social": [
+    "social:", "joke", "funny", "vibe check", "meme", "aura", "vibe", "music", "bro", "lol", "haha",
+    "what's up", "how are you", "hey", "sup", "darth", "sith", "jedi", "fantasy", "mythology",
+    "storytelling", "legend", "tales", "epic", "lore", "rpg", "dnd", "magic", "dragon", "quest",
+    "once upon a time", "tell me a joke", "should i eat", "pizza", "food tonight", "what should i watch",
+    "recommend me", "make me laugh", "entertain me", "something fun", "cheer me up", "i'm bored", "im bored",
+    "talk to me", "tell me something", "random fact", "fun fact", "did you know", "roast me", "compliment me",
+    "movie recommendation", "game recommendation", "what to play", "what to watch", "chill", "relax",
+    "lets chat", "small talk", "good morning", "good evening", "how's it going",
+    "yo", "wassup", "bruh", "dude", "gg", "based", "lowkey", "ngl"
+  ],
+  "misha-reasoning": [
+    "reasoning:", "analyze", "deconstruct", "logic", "break down", "investigate", "theoretical", "deep dive",
+    "systematic", "calculate", "solve", "math", "equation", "step by step", "code", "python", "script",
+    "programming", "algorithm", "compare", "versus", "vs", "logically", "what is better", "should i choose",
+    "help me decide", "think it through", "pros and cons", "trade off", "tradeoff", "cloud vs", "local vs",
+    "which is better", "break this down", "help me think", "what makes more sense", "make sense of",
+    "explain how", "how does", "why does", "what happens when", "walk me through", "teach me", "how to",
+    "difference between", "what is the difference", "compare these", "evaluate", "assess", "critique",
+    "is this correct", "fact check", "what would happen", "cause and effect", "reason through",
+    "think through", "work through", "figure out", "help me understand", "give me a breakdown",
+    "in depth", "detailed explanation", "how does this work", "what causes", "prove", "disprove",
+    "why", "how", "explain", "reason", "deduce", "validate", "chain of thought", "detailed logic",
+    "technical breakdown", "underlying principles", "what is the reason", "explain why", "scientific",
+    "phenomenon", "fundamental", "complex", "query", "investigation", "analysis", "system",
+    "compare lions and tigers", "contrast", "distinguish", "analytical comparison", "detailed differences",
+    "physics", "quantum", "why is", "scientific explanation", "how come", "simply explain", "breakdown"
+  ],
+  "misha-maincore": [
+    "maincore:", "registry", "list modules", "system status", "fallback mode", "access directory"
+  ]
+}

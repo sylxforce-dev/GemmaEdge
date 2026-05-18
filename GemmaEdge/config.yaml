@@ -1,0 +1,65 @@
+# ============================================================
+# GemmaEdge Sovereign Configuration Matrix v1.4
+# Project: GemmaEdge
+# Purpose: Master control file for local AI orchestration.
+# Author: Darth SulxX & Misha (Sovereign Engine)
+# ============================================================
+
+# --- VECTOR ENGINE (MiniLM) ---
+engine:
+  # Absolute path to MiniLM model files on local drive
+  model_path: "F:/HuggingFaceModels/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
+  device: "cpu"
+  # System remains 100% offline
+  offline_mode: true
+
+# --- ROUTER LOGIC ---
+router:
+  # Sensitivity (0.40).
+  # Lowered from 0.45 -> 0.40 to make Misha more prone to use specialists.
+  threshold: 0.30
+  max_weight: 0.95
+  mean_weight: 0.05
+  matrix_path: "router/personality_matrix.json"
+
+# --- REASONING ENGINE (Ollama Personalities) ---
+personalities:
+  # Synchronized with local Ollama model names
+  main_core: "misha-maincore"
+  sovereign: "misha-sovereign"
+  reasoning: "misha-reasoning"
+  auditor: "misha-auditor"
+  social: "misha-social"
+  oracle: "misha-oracle"
+
+model_storage:
+  # Root path for Modelfiles and GGUF sources
+  root_path: "F:/GemmaEdge/engineModels"
+  base_gguf: "gemma-4-E2B-it-Q4_K_M.gguf"
+
+# --- HARDWARE CONTROL ---
+hardware:
+  # GTX 1050 Ti VRAM limit (GB)
+  gpu_vram_limit: 4.0
+  # 0 = Cold-swap (Purges VRAM immediately after use)
+  # -1 = Keep alive (Holds model in memory)
+  keep_alive: 0
+
+# --- API SERVER (Backend) ---
+api:
+  host: "127.0.0.1"
+  port: 8000
+  reload: true
+  workers: 1
+
+# --- DASHBOARD (Frontend) ---
+frontend:
+  host: "127.0.0.1"
+  port: 8501
+  headless: true
+  api_url: "http://127.0.0.1:8000"
+
+# --- LOGGING & DEV ---
+logging:
+  debug_enabled: true
+  log_level: "info"
