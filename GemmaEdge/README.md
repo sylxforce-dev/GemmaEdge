@@ -1,7 +1,8 @@
 # GEMMAEDGE V1.4 — SOVEREIGN SETUP & TROUBLESHOOTING GUIDE
 
-**Project:** GemmaEdge (Local AI Reasoning Engine)
-**Hardware Target:** NVIDIA GPU Only (GTX 1050 Ti 4GB Optimized)
+**Project:** GemmaEdge (Local AI Reasoning Engine)  
+**Hardware Target:** NVIDIA GPU Only (GTX 1050 Ti 4GB Optimized)  
+**Environment Target:** Windows Optimized Deployment Matrix  
 **Base Logic:** Reasoning over Reflex™
 
 ---
