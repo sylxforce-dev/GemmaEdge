@@ -10,7 +10,7 @@ from frontend.helpers import get_module_color, get_module_desc
 
 
 def render_status_bar():
-    """Kuvab süsteemi üldise staatuse ja API ühenduse [cite: 2026-02-14]."""
+    """Kuvab süsteemi üldise staatuse ja API ühenduse """
     api_status = "🟢 Online" if st.session_state.get("api_online") else "🔴 Offline"
     st.markdown(f"""
     <div class="status-bar">
@@ -20,7 +20,7 @@ def render_status_bar():
 
 
 def render_module_box():
-    """Kuvab hetkel aktiivse Misha mooduli ja selle funktsiooni [cite: 2026-02-14]."""
+    """Kuvab hetkel aktiivse Misha mooduli ja selle funktsiooni."""
     module = st.session_state.active_module
     color = get_module_color(module)
     desc = get_module_desc(module)
@@ -33,7 +33,7 @@ def render_module_box():
 
 
 def render_swap_log():
-    """Logib kõik moodulite vahetused (Cold-Swaps) reaalajas [cite: 2026-02-14]."""
+    """Logib kõik moodulite vahetused (Cold-Swaps) reaalajas """
     st.markdown("**Swap Log**")
     swap_html = '<div class="swap-log">'
 
@@ -56,7 +56,7 @@ def render_swap_log():
 
 
 def render_chat():
-    """Kuvab vestluse ajaloo koos inferentsi aja ja mudeli märgistusega [cite: 2026-02-14]."""
+    """Kuvab vestluse ajaloo koos inferentsi aja ja mudeli märgistusega."""
     for msg in st.session_state.messages:
         if msg["role"] == "op":
             st.markdown(
@@ -75,7 +75,7 @@ def render_chat():
 
 def render_telemetry_bar():
     """
-    JS-Ghosti ankurpunkt reaalajas GPU telemeetria jaoks [cite: 2026-02-14].
+    JS-Ghosti ankurpunkt reaalajas GPU telemeetria jaoks.
     """
     js_path = os.path.join(os.path.dirname(__file__), "static", "telemetry.js")
     try:
