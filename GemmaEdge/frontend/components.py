@@ -1,8 +1,3 @@
-"""
-components.py — Reusable UI Components (Sovereign JS-Ghost Edition)
-frontend/components.py
-"""
-
 import streamlit.components.v1 as components
 import streamlit as st
 import os
@@ -10,7 +5,7 @@ from frontend.helpers import get_module_color, get_module_desc
 
 
 def render_status_bar():
-    """Kuvab süsteemi üldise staatuse ja API ühenduse """
+    """Kuvab süsteemi üldise staatuse ja API ühenduse."""
     api_status = "🟢 Online" if st.session_state.get("api_online") else "🔴 Offline"
     st.markdown(f"""
     <div class="status-bar">
@@ -33,7 +28,7 @@ def render_module_box():
 
 
 def render_swap_log():
-    """Logib kõik moodulite vahetused (Cold-Swaps) reaalajas """
+    """Logib kõik moodulite vahetused (Cold-Swaps) reaalajas."""
     st.markdown("**Swap Log**")
     swap_html = '<div class="swap-log">'
 
@@ -74,13 +69,10 @@ def render_chat():
 
 
 def render_telemetry_bar():
-    """
-    JS-Ghosti ankurpunkt reaalajas GPU telemeetria jaoks.
-    """
+    """JS-Ghosti ankurpunkt reaalajas GPU telemeetria jaoks."""
     js_path = os.path.join(os.path.dirname(__file__), "static", "telemetry.js")
     try:
         with open(js_path, "r", encoding="utf-8") as f:
-            # See on see muutuja, mida scripti sees kasutame
             telemetry_script = f.read()
     except FileNotFoundError:
         telemetry_script = "console.error('JS-GHOST: telemetry.js NOT FOUND');"
