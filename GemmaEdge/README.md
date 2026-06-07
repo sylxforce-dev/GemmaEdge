@@ -1,7 +1,7 @@
- GEMMAEDGE V1.4 — SOVEREIGN SETUP & TROUBLESHOOTING GUIDE
+# GEMMAEDGE V1.4 — SOVEREIGN SETUP & TROUBLESHOOTING GUIDE
 
 **Project:** GemmaEdge (Local AI Reasoning Engine)  
-**Hardware Target:** NVIDIA GPU Only (GTX 1050 Ti 4GB Optimized)  
+**Hardware Target:** NVIDIA GPU Only (GTX 1050 Ti 4GB Optimized via Ollama)  
 **Environment Target:** Windows Native Architecture Only (Requires Win DLL Paths)  
 **Base Logic:** Reasoning over Reflex™
 
@@ -34,12 +34,12 @@ python -m venv .venv
 * **Linux/Mac:** `source .venv/bin/activate`
 
 #### Project Requirements File
-Before installing, ensure your `requirements.txt` in the root folder contains these exact definitions for proper CUDA integration:
+Create a `requirements.txt` file in your project root with the following standard packages:
 
 ```text
 # requirements.txt
---index-url https://pytorch.org
 torch==2.3.1
+sentence-transformers==3.0.1
 streamlit==1.35.0
 fastapi==0.111.0
 uvicorn==0.30.1
@@ -52,30 +52,24 @@ pydantic==2.7.2
 pip install -r requirements.txt
 ```
 
-⚠️ **NOTE:** The `--index-url` flags the system to pull the CUDA 12.1 binary version of PyTorch directly from PyTorch servers instead of PyPI. This is required for local GPU acceleration. Do not delete this line.
-
 ---
 
 ### 1. DIAGNOSTIC TOOLS (The Safety Net)
 
-Before starting the engine, use the `guide_scripts/` to verify your hardware-software alignment. This prevents 99% of setup errors.
+Before starting the engine, use the `guide_scripts/` to verify your environment alignment. This prevents setup configuration errors.
 
 #### Step A: Verify Core Support
 * Run `python guide_scripts/check_system.py`
-* Checks `.venv` activation status.
-* Verifies CUDA detection routines.
-* Confirms Torch GPU support.
-* **Expected:** `CUDA Available: True | GPU: NVIDIA GeForce GTX XXXX`
-* *Fix:* If `False`, reinstall via the `--index-url` command inside `requirements.txt`.
+* Checks `.venv` activation status and validates Python dependencies.
 
 #### Step B: Locate DLL Path
 * Run `python guide_scripts/find_nvml_auto.py`
-* Locates `nvml.dll` dynamically.
+* Locates `nvml.dll` dynamically for GPU telemetries.
 * **Expected:** `Found nvml.dll at C:\Windows\System32\nvml.dll`
 
 #### Step C: Test Telemetry Bridge
 * Run `python guide_scripts/test_nvml_link.py`
-* Confirms Python-to-GPU link.
+* Confirms Python-to-GPU link for monitoring memory states during swaps.
 * **Expected:** `GPU Telemetry Active | VRAM: X.XX GB | Temp: XX C`
 
 ---
@@ -100,6 +94,11 @@ personalities:
   auditor: "misha-auditor"
   social: "misha-social"
   oracle: "misha-oracle"
+
+engine:
+  model_path: "C:\\Users\\YourUsername\\.cache\(\huggingface\hub\models--\)sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  device: "cpu"
+  offline_mode: true
 
 hardware:
   keep_alive: 0 # Cold-Swap value
@@ -213,6 +212,3 @@ router:
 
 > "The constraint is the point. Structure is the cure."  
 > — *Misha Sovereign*
-
-### !!! WARNING !!!
-**DO NOT** install standard torch instead of the CUDA-indexed version specified in `requirements.txt`. Using the wrong version will cause GPU detection failures and will break the telemetry layer. Use the `--index-url` command inside `requirements.txt` exactly as written.
