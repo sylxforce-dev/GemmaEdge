@@ -4,20 +4,23 @@
 
 GemmaEdge is a lightweight, sovereignty-focused AI orchestration engine that enables multi-domain reasoning on constrained hardware without cloud dependency, API costs, or external data leakage.
 
-> **“Advanced AI is not defined by scale, but by how intelligently it adapts to constraints. The constraint is not the story. The engineering born from it is.”**
+> **“Advanced AI is not defined by scale, but by how intelligently it adapts to constraints.”**
 
 ---
 
-## ⚡ The Gemma 4 Good Hackathon Writeup (May 18, 2026)
+## 🚀 Overview
 
-### What I Built
-I developed **GemmaEdge**, a sovereign local AI orchestration system powered by **Gemma 4**. Built solo in 15 days, the system is engineered as a 6-module specialist reasoning engine that runs entirely on consumer-grade legacy hardware—specifically an NVIDIA GTX 1050 Ti (4GB VRAM) from 2016. By treating extreme hardware limitations as a core design requirement, I built a professional reasoning environment that requires zero cloud dependency, no API subscriptions, and ensures absolute data sovereignty.
+GemmaEdge is a CPU-aware, VRAM-constrained multi-agent inference system designed for running local LLM workflows on low-end consumer GPUs.
+
+It focuses on:
+- Modular reasoning specialization
+- CPU-based routing (no GPU overhead)
+- Dynamic VRAM model swapping
+- Fully offline execution
 
 ---
 
-## 🏗️ Core Architecture (V1 Ecosystem)
-
-GemmaEdge operates through a modular approach where each specialist handles a specific domain to prevent context contamination. In the V1 configuration, the execution is fully optimized for the **Gemma 4 E2B** model running locally under strict 4GB constraints:
+## 🏗️ Architecture (V1)
 
 
 ┌────────────────────────┐
@@ -25,83 +28,93 @@ GemmaEdge operates through a modular approach where each specialist handles a sp
 └───────────┬────────────┘
 │
 ▼
-[ misha_selector.py ]
-Offline MiniLM-L6-v2
+misha_selector.py
+(MiniLM-L6-v2 CPU router)
 │
-Hybrid Score Routing
+semantic routing layer
 ┌─────┴─────┐
 ▼ ▼
-SPECIALIST MISHA-MAINCORE
-MODULES CORE
+SPECIALIST MAIN CORE
+MODULES MODEL
 │ │
-└─────┬───────┘
+└─────┬─────┘
 ▼
-[ Ollama Swap ]
-keep_alive=0 (VRAM purge)
+VRAM SINGLE MODEL SWAP
+(keep_alive=0 purge)
 ▼
-GTX 1050 Ti VRAM
+GPU EXECUTION
 
 
 ---
 
-### The Specialist Squad (`Modelfiles`)
+## ⚙️ Core Modules
 
-- **Misha_MainCore (Gemma 4 E2B)** — Default reasoning and routing layer
-- **Misha_Social (Gemma 4 E2B)** — Context-aware interaction layer
-- **Misha_Reasoning (Gemma 4 E2B)** — Step-by-step deterministic logic engine
-- **Misha_Auditor (Gemma 4 E2B)** — CV, contract, career analysis layer
-- **Misha_Oracle (Gemma 4 E2B)** — Probability + strategy + risk engine
-- **Misha_Sovereign (Gemma 4 E2B)** — System identity + stability layer
+- MainCore — general reasoning + orchestration
+- Social — conversational adaptation layer
+- Reasoning — deterministic logic engine
+- Auditor — validation, CV, contract analysis
+- Oracle — strategy + probability modeling
+- Sovereign — system stability + identity layer
 
 ---
 
-## ⚙️ Key Innovations
+## 🧠 Key Technical Features
 
-### 1. CPU Semantic Router
+### CPU Semantic Router
 - SentenceTransformer MiniLM-L6-v2
-- Fully CPU-based routing
-- Zero VRAM cost
+- Fully CPU execution
+- Zero VRAM overhead
+- Lightweight intent classification
 
-### 2. VRAM Cold Swap System
-- Single model in memory
-- Hard purge before load
-- Prevents OOM / fragmentation
+---
 
-### 3. Telemetry Bridge
+### VRAM Cold Swap System
+- One model in GPU memory at a time
+- Hard purge before loading next model
+- Prevents OOM and fragmentation
+- Stable 4GB VRAM operation
+
+---
+
+### Telemetry Layer
 - pynvml GPU monitoring
 - VRAM + temperature tracking
-- Real-time system insight
+- Real-time system metrics
 
 ---
 
 ## 🛠️ Deployment
 
-- Backend: Ollama
-- Config: personality_matrix.json + config.yaml
-- Fully offline capable
-- Designed for low-end GPUs (4GB VRAM)
+Backend:
+- Ollama runtime
+
+Requirements:
+- Windows / Linux
+- NVIDIA GPU (4GB VRAM minimum tested)
+- Python 3.10+
+
+Config files:
+- config.yaml
+- personality_matrix.json
 
 ---
 
-## 🌍 Impact
-
-- Works without cloud
-- Runs on <$100 hardware
-- Enables offline AI reasoning systems
-
-Use cases:
-- Disaster / offline environments
-- Privacy-sensitive AI workloads
-- Education / research accessibility
-- Low-cost AI experimentation
-
----
-
-## 📌 Philosophy
+## 🌍 Design Principles
 
 - Sovereignty over dependency
-- Architecture over brute force scaling
-- Constraint-driven design
+- Local-first execution
+- Constraint-driven optimization
+- Deterministic system behavior
+
+---
+
+## 🎯 Use Cases
+
+- Offline AI systems
+- Privacy-sensitive workloads
+- Education / research environments
+- Low-cost AI experimentation
+- Edge computing setups
 
 ---
 
@@ -109,13 +122,16 @@ Use cases:
 
 Active development (V1 stable)
 
-Future:
-- Faster routing optimization
-- Multi-instance scheduling
+Planned improvements:
+- Routing optimization
+- Multi-instance execution
 - Context compression layer
+- Latency improvements
 
 ---
 
 ## 🔥 Summary
 
-GemmaEdge is a local-first AI reasoning architecture proving that intelligent system design can outperform raw co
+GemmaEdge is a local-first AI reasoning system designed to run advanced multi-agent workflows on constrained consumer hardware without cloud dependency.
+
+It proves that architecture > brute force compute when constraints are tight.
