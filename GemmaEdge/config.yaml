@@ -1,32 +1,27 @@
+Siin on sinu config.yaml maatriks ingliskeelsete kommentaaridega. See hoiab struktuuri selge ja arendajale arusaadavana.
+
+YAML
 # ============================================================
-# GemmaEdge Sovereign Configuration Matrix v1.4
-# Project: GemmaEdge
-# Purpose: Master control file for local AI orchestration.
-# Author: Darth SulxX & Misha (Sovereign Engine)
+# GemmaEdge Sovereign Configuration Matrix (Production-Ready)
 # ============================================================
 
-# --- VECTOR ENGINE (MiniLM) ---
 engine:
-  # Absolute path to MiniLM model files on local drive
-  # ⚠️ UPDATE THIS: Replace with your own local MiniLM snapshot path
-  # Download from: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
-  model_path: "F:/HuggingFaceModels/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
+  # Absolute path to the local vector engine model snapshot
+  model_path: "C:\\Users\\DrSulxX\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
   device: "cpu"
-  # System remains 100% offline
+  # Keep the system offline for security and privacy
   offline_mode: true
 
-# --- ROUTER LOGIC ---
 router:
-  # Sensitivity (0.40).
-  # Lowered from 0.45 -> 0.40 to make Misha more prone to use specialists.
+  # Similarity threshold for personality triggering
   threshold: 0.30
   max_weight: 0.95
   mean_weight: 0.05
+  # Path to the JSON personality matrix
   matrix_path: "router/personality_matrix.json"
 
-# --- REASONING ENGINE (Ollama Personalities) ---
 personalities:
-  # Synchronized with local Ollama model names
+  # Mapping of logical keys to official Ollama model names
   main_core: "misha-maincore"
   sovereign: "misha-sovereign"
   reasoning: "misha-reasoning"
@@ -34,38 +29,17 @@ personalities:
   social: "misha-social"
   oracle: "misha-oracle"
 
-model_storage:
-  # Root path for Modelfiles and GGUF sources
-  # ⚠️ UPDATE THIS: Replace with your own project path (e.g., "C:/YourPath/GemmaEdge/engineModels")
-  # This path must point to the folder where your Modelfiles live
-  # Without this path the engine cannot find or compile the modules
-  root_path: "F:/GemmaEdge/engineModels"
-  base_gguf: "gemma-4-E2B-it-Q4_K_M.gguf"
-
-# --- HARDWARE CONTROL ---
 hardware:
-  # GTX 1050 Ti VRAM limit (GB)
-  # ⚠️ UPDATE THIS: Change to match your GPU VRAM
+  # GPU memory constraints in GB
   gpu_vram_limit: 4.0
-  # 0 = Cold-swap (Purges VRAM immediately after use)
-  # -1 = Keep alive (Holds model in memory)
+  # Cold-swap setting: 0 = immediate purge, >0 = keep-alive in seconds
   keep_alive: 0
 
-# --- API SERVER (Backend) ---
 api:
+  # Backend server host and port settings
   host: "127.0.0.1"
   port: 8000
-  reload: true
-  workers: 1
 
-# --- DASHBOARD (Frontend) ---
 frontend:
-  host: "127.0.0.1"
+  # Streamlit dashboard port
   port: 8501
-  headless: true
-  api_url: "http://127.0.0.1:8000"
-
-# --- LOGGING & DEV ---
-logging:
-  debug_enabled: true
-  log_level: "info"
