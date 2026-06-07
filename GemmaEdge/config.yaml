@@ -44,6 +44,8 @@ api:
 logging:
   # Standard Uvicorn log level (info, debug, warning, error, critical)
   log_level: "info"
+  # Internal framework engine toggle required by application lifespan startup trace
+  debug_enabled: false
 
 frontend:
   # Streamlit dashboard port
