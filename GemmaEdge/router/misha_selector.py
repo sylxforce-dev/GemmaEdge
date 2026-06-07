@@ -9,7 +9,7 @@ class MishaSelector:
     def __init__(self):
         """
         Darth Misha - Sovereign Hybrid Router v1.4
-        Logic driven by external config.yaml with full asynchronous safety boundaries.
+        Logic driven by external config.yaml.
         """
         # 1. Load configuration from the YAML matrix
         self.config = self._load_config()
@@ -19,19 +19,18 @@ class MishaSelector:
             os.environ['TRANSFORMERS_OFFLINE'] = '1'
             os.environ['HF_DATASETS_OFFLINE'] = '1'
 
-        # FIX: Start clean with None so the status endpoint tracks state accurately
+        # FIX: Start clean with None for accurate status endpoint telemetry tracking
         self.current_model = None
 
         # 2. Establish dynamic paths relative to the project root
-        self.base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.matrix_path = os.path.join(self.base_path, self.config['router']['matrix_path'])
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.matrix_path = os.path.join(base_path, self.config['router']['matrix_path'])
         self.matrix = self._load_matrix_from_json()
 
         # --- CONFIGURATION PARAMETERS ---
         self.THRESHOLD = self.config['router']['threshold']
         self.MAX_WEIGHT = self.config['router']['max_weight']
         self.MEAN_WEIGHT = self.config['router']['mean_weight']
-        self.keep_alive = self.config['hardware']['keep_alive']
 
         print(f"\n[ROUTER]: Initializing Sovereign Engine (Threshold: {self.THRESHOLD})...")
 
@@ -88,29 +87,33 @@ class MishaSelector:
 
     def select_personality(self, user_input):
         """Calculates hybrid similarity score and logs the decision-making process."""
+        target = self.config['personalities']['main_core']
+        highest_hybrid_score = 0.0
         query_vec = self.vector_engine.encode(user_input, convert_to_tensor=True)
-        scores = {}
 
-        # OPTIMIZATION FIX: Run cos_sim exactly ONCE per module to prevent double compute waste
         for model, keyword_vecs in self.encoded_matrix.items():
-            sim_tensor = util.cos_sim(query_vec, keyword_vecs)
-            current_max = sim_tensor.max().item() * self.MAX_WEIGHT
-            current_mean = sim_tensor.mean().item() * self.MEAN_WEIGHT
-            scores[model] = current_max + current_mean
+            # YOUR ORIGINAL MATH: Cosine similarity calculation
+            scores = util.cos_sim(query_vec, keyword_vecs)
+            current_max = scores.max().item()
+            current_mean = scores.mean().item()
 
-        # Find the highest hybrid scoring specialist
-        best_match = max(scores, key=scores.get)
-        score = scores[best_match]
+            # YOUR ORIGINAL MATH: Hybrid scoring logic based on YAML weights
+            hybrid_score = (current_max * self.MAX_WEIGHT) + (current_mean * self.MEAN_WEIGHT)
+
+            if hybrid_score > highest_hybrid_score:
+                highest_hybrid_score = hybrid_score
+                
+                # Dynamic mapping to config names
+                clean_key = model.replace("misha-", "")
+                target = self.config['personalities'].get(clean_key, self.config['personalities']['main_core'])
 
         # LOGGING: Detailed telemetry of scores and selection before threshold validation
-        print(f"[ROUTER]: Match: {best_match.upper()} | Score: {score:.4f} (Threshold: {self.THRESHOLD})")
+        print(f"[ROUTER]: Match: {target.upper()} | Score: {highest_hybrid_score:.4f} (Threshold: {self.THRESHOLD})")
 
         # THRESHOLD VALIDATION: Fallback to MAINCORE if similarity is insufficient
-        if score >= self.THRESHOLD:
-            clean_key = best_match.replace("misha-", "")
-            target = self.config['personalities'].get(clean_key, self.config['personalities']['main_core'])
-        else:
-            print(f"[ROUTER]: Score below threshold. Falling back to default core.")
+        if highest_hybrid_score < self.THRESHOLD:
+            if target != self.config['personalities']['main_core']:
+                print(f"[ROUTER]: Score below threshold. Falling back to MAINCORE.")
             target = self.config['personalities']['main_core']
 
         return self._handle_cold_swap(target)
@@ -118,7 +121,7 @@ class MishaSelector:
     def _handle_cold_swap(self, target):
         """Executes model swap and applies hardware 'keep_alive' rules for VRAM management."""
         if target != self.current_model:
-            # Only attempt memory flush if a model is actively loaded (skips cold boot step)
+            # Only trigger memory purge routine if a model is actively initialized
             if self.current_model:
                 print(f"[ROUTER]: Swapping VRAM: {self.current_model.upper()} -> {target.upper()}")
                 try:
@@ -126,12 +129,12 @@ class MishaSelector:
                     ollama.chat(
                         model=self.current_model,
                         messages=[],
-                        keep_alive=self.keep_alive
+                        keep_alive=self.config['hardware']['keep_alive']
                     )
                 except Exception as e:
                     print(f"⚠️ [VRAM FLUSH ERROR]: Failed to purge {self.current_model}: {e}")
             else:
-                print(f"[ROUTER]: Cold boot trace. Initializing runtime to: {target.upper()}")
+                print(f"[ROUTER]: Cold boot trace. Initializing active runtime to: {target.upper()}")
             
             self.current_model = target
             
