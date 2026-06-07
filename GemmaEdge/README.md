@@ -1,9 +1,22 @@
-# GEMMAEDGE V1.4 — SOVEREIGN SETUP & TROUBLESHOOTING GUIDE
+ GEMMAEDGE V1.4 — SOVEREIGN SETUP & TROUBLESHOOTING GUIDE
 
 **Project:** GemmaEdge (Local AI Reasoning Engine)  
 **Hardware Target:** NVIDIA GPU Only (GTX 1050 Ti 4GB Optimized)  
 **Environment Target:** Windows Native Architecture Only (Requires Win DLL Paths)  
 **Base Logic:** Reasoning over Reflex™
+
+---
+
+### PRE-REQUISITES (Install Ollama First)
+
+GemmaEdge relies on Ollama to host and serve the partitioned model variants locally.
+
+1. Download and install **Ollama for Windows** from the official site: [ollama.com](https://ollama.com)
+2. Run the installer and ensure Ollama is running in your Windows system tray.
+3. Open a fresh command prompt (`cmd`) and verify the installation:
+   ```cmd
+   ollama --version
+   ```
 
 ---
 
@@ -20,12 +33,26 @@ python -m venv .venv
 * **Windows:** `.venv\Scripts\activate`
 * **Linux/Mac:** `source .venv/bin/activate`
 
+#### Project Requirements File
+Before installing, ensure your `requirements.txt` in the root folder contains these exact definitions for proper CUDA integration:
+
+```text
+# requirements.txt
+--index-url https://pytorch.org
+torch==2.3.1
+streamlit==1.35.0
+fastapi==0.111.0
+uvicorn==0.30.1
+pyyaml==6.0.1
+pydantic==2.7.2
+```
+
 #### Install Dependencies
 ```cmd
 pip install -r requirements.txt
 ```
 
-⚠️ **NOTE:** The `requirements.txt` uses `--index-url` to pull the CUDA 12.1 version of PyTorch directly from PyTorch servers instead of PyPI. This is required for GPU support. Do not remove this line.
+⚠️ **NOTE:** The `--index-url` flags the system to pull the CUDA 12.1 binary version of PyTorch directly from PyTorch servers instead of PyPI. This is required for local GPU acceleration. Do not delete this line.
 
 ---
 
@@ -164,7 +191,6 @@ GemmaEdge is model-agnostic. To use a different GGUF model:
    ollama create misha-oracle     -f Misha_Oracle.Modelfile
    ollama create misha-social     -f Misha_Social.Modelfile
    ollama create misha-reasoning  -f Misha_Reasoning.Modelfile
-   ollama create misha-sovereign  -f Misha_Sovereign.Modelfile
    ```
 5. Boot normally — follow STEP 3 above.
 
