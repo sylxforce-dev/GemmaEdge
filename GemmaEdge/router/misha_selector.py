@@ -6,7 +6,6 @@ router/misha_selector.py
 import os
 import json
 import ollama
-import torch
 import yaml
 from sentence_transformers import SentenceTransformer, util
 
