@@ -1,15 +1,6 @@
-"""
-run_api.py — GemmaEdge API Launcher (Sovereign Edition)
-Root level, beside boot.py
-
-Usage: python run_api.py
-This version is fully anchored to config.yaml.
-"""
-
+import os
 import uvicorn
 import yaml
-import os
-
 
 def load_sovereign_config():
     """Reads the master configuration matrix."""
@@ -18,20 +9,23 @@ def load_sovereign_config():
         print(f"❌ [CRITICAL ERROR]: {config_path} not found in root!")
         exit(1)
 
-    with open(config_path, "r") as f:
+    with open(config_path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
-
 if __name__ == "__main__":
-    # Load settings from your YAML control panel
     cfg = load_sovereign_config()
 
-    # Extract API and Logging parameters
-    host = cfg['api']['host']
-    port = cfg['api']['port']
-    reload_mode = cfg['api']['reload']
-    workers = cfg['api']['workers']
-    log_level = cfg['logging']['log_level']
+    # Otseteed sektsioonidele puhtamaks lugemiseks
+    api_cfg = cfg['api']
+    log_cfg = cfg['logging']
+
+    host = api_cfg['host']
+    port = api_cfg['port']
+    reload_mode = api_cfg['reload']
+    log_level = log_cfg['log_level']
+    
+    # Uvicorn ei luba reload=True puhul mitut workerit. Sunnime reegli peale.
+    workers = 1 if reload_mode else api_cfg['workers']
 
     # 🧠 Set dev runtime flags for internal logic
     os.environ["GEMMAEDGE_MODE"] = "dev" if reload_mode else "prod"
@@ -49,6 +43,6 @@ if __name__ == "__main__":
         port=port,
         reload=reload_mode,
         workers=workers,
-        log_level=log_level,
+        log_level=log_level.lower(),
         access_log=True
     )
