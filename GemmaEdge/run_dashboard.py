@@ -1,11 +1,7 @@
-"""
-run_dashboard.py — GemmaEdge Dashboard Launcher (Sovereign Edition)
-Root level, beside boot.py and run_api.py
-"""
+import os
 import subprocess
 import sys
 import yaml
-import os
 
 
 def load_frontend_config():
@@ -15,22 +11,27 @@ def load_frontend_config():
         print(f"❌ [CRITICAL ERROR]: {config_path} not found!")
         exit(1)
 
-    with open(config_path, "r") as f:
+    # Määrame utf-8 kodeeringu, et Windowsi terminalid ei viskaks emoji tõttu vigu
+    with open(config_path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
 if __name__ == "__main__":
     cfg = load_frontend_config()
 
+    # Otsetee frontend sektsioonile
+    front_cfg = cfg['frontend']
+
     # Extract settings from YAML
-    port = str(cfg['frontend']['port'])
-    headless = "true" if cfg['frontend']['headless'] else "false"
+    port = str(front_cfg['port'])
+    headless = "true" if front_cfg['headless'] else "false"
 
     print("\n" + "=" * 55)
     print(" 😼 GemmaEdge Dashboard — Sovereign Launcher Active")
     print(f" 📡 Local URL: http://localhost:{port}")
     print("=" * 55 + "\n")
 
+    # Käivitame Streamliti põhiprotsessi
     subprocess.run([
         sys.executable, "-m", "streamlit", "run",
         "frontend/dashboard.py",
