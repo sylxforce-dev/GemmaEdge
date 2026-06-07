@@ -2,7 +2,7 @@
 
 **A modular, fully local AI reasoning system optimized for consumer hardware (GTX 1050 Ti class).**
 
-GemmaEdge is a lightweight, sovereignty-focused AI orchestration engine that enables multi-domain reasoning on constrained hardware without cloud dependency, API costs, or external data leakage.
+GemmaEdge is a sovereignty-focused AI orchestration engine that runs multi-domain reasoning locally without cloud dependency, API costs, or external data leakage.
 
 > **“Advanced AI is not defined by scale, but by how intelligently it adapts to constraints.”**
 
@@ -10,128 +10,77 @@ GemmaEdge is a lightweight, sovereignty-focused AI orchestration engine that ena
 
 ## 🚀 Overview
 
-GemmaEdge is a CPU-aware, VRAM-constrained multi-agent inference system designed for running local LLM workflows on low-end consumer GPUs.
-
-It focuses on:
-- Modular reasoning specialization
-- CPU-based routing (no GPU overhead)
-- Dynamic VRAM model swapping
-- Fully offline execution
+GemmaEdge is a local-first AI reasoning architecture designed to run multi-agent inference systems on constrained consumer hardware. The system is built around a custom semantic execution controller (**MishaSelector**) that manages routing, model selection, and VRAM lifecycle in real time.
 
 ---
 
-## 🏗️ Architecture (V1)
+## 🧠 Core Innovation: MishaSelector (Sovereign Inference Controller)
 
+`MishaSelector` is not a classifier. It is a runtime-level inference orchestration engine responsible for semantic routing, model selection, VRAM lifecycle control, and execution stability under strict hardware constraints.
 
-┌────────────────────────┐
-│ USER PROMPT (CPU) │
-└───────────┬────────────┘
-│
-▼
-misha_selector.py
-(MiniLM-L6-v2 CPU router)
-│
-semantic routing layer
-┌─────┴─────┐
-▼ ▼
-SPECIALIST MAIN CORE
-MODULES MODEL
-│ │
-└─────┬─────┘
-▼
-VRAM SINGLE MODEL SWAP
-(keep_alive=0 purge)
-▼
-GPU EXECUTION
-
+### ⚙️ Routing Pipeline
+Use code with caution.USER INPUT│▼CPU EMBEDDING ENGINE (MiniLM-L6-v2)│▼PRE-ENCODED SEMANTIC MATRIX│▼HYBRID SCORING ENGINE (Max Similarity + Mean Distribution Weighting)│▼MODEL SELECTION DECISION│▼OLLAMA EXECUTION LAYER│▼VRAM COLD SWAP SYSTEM (keep_alive=0)
+### 🔥 Key Technical Features
+*   **Hybrid Semantic Scoring System:** Uses maximum cosine similarity and mean distribution signal for robust routing under ambiguity.
+*   **Precomputed Semantic Decision Space:** Embeddings are precomputed at startup, turning routing into a static inference graph with deterministic latency.
+*   **VRAM Cold Swap Controller:** Only one model exists in GPU memory at a time. The previous model is forcibly purged via `keep_alive=0`, preventing fragmentation and OOM issues.
+*   **Deterministic Fallback Layer:** If confidence score is below the configured threshold, the system automatically falls back to MainCore to ensure stable, uninterrupted execution.
 
 ---
 
-## ⚙️ Core Modules
+## 🏗️ System Architecture
 
-- MainCore — general reasoning + orchestration
-- Social — conversational adaptation layer
-- Reasoning — deterministic logic engine
-- Auditor — validation, CV, contract analysis
-- Oracle — strategy + probability modeling
-- Sovereign — system stability + identity layer
-
----
-
-## 🧠 Key Technical Features
-
-### CPU Semantic Router
-- SentenceTransformer MiniLM-L6-v2
-- Fully CPU execution
-- Zero VRAM overhead
-- Lightweight intent classification
+┌────────────────────────┐│   USER PROMPT (CPU)    │└───────────┬────────────┘│[ misha_selector.py ] <── Offline MiniLM-L6-v2│┌──────────────┴──────────────┐▼ (Hybrid Score > Threshold)  ▼ (Fallback)┌─────────────────┐           ┌──────────────────┐│ SPECIALIST MOD  │           │ MISHA-MAINCORE   │└────────┬────────┘           └────────┬─────────┘│                             │└──────────────┬──────────────┘▼[ ollama chat swap ](keep_alive=0 -> Hard Purge VRAM)▼┌──────────────────┐│   GTX GPU VRAM   │└──────────────────┘
+### 🧩 Specialist Modules (`Modelfiles`)
+*   **`Misha_MainCore` (Gemma 4 E2B)** — General reasoning and core system orchestration fallback.
+*   **`Misha_Social` (Gemma 4 E2B)** — Conversational adaptation layer and high-speed contextual smalltalk.
+*   **`Misha_Reasoning` (Gemma 4 E2B)** — Transparent, deterministic logic execution with step-by-step reasoning chains.
+*   **`Misha_Auditor` (Gemma 4 E2B)** — Structural validation, analysis, and strategic career/CV reframing.
+*   **`Misha_Oracle` (Gemma 4 E2B)** — Asset strategist. Handles probability, logic mathematics, and game system RNG mechanics.
+*   **`Misha_Sovereign` (Gemma 4 E2B)** — System governance, digital autonomy enforcement, and meta-level stability.
 
 ---
 
-### VRAM Cold Swap System
-- One model in GPU memory at a time
-- Hard purge before loading next model
-- Prevents OOM and fragmentation
-- Stable 4GB VRAM operation
+## ⚙️ Deployment
 
----
+*   **Backend:** Ollama
+*   **OS:** Windows / Linux
+*   **GPU:** NVIDIA 4GB VRAM minimum tested
+*   **Runtime:** Python 3.10+
+*   **Config Structure:** `config.yaml`, `personality_matrix.json`, modular model files
 
-### Telemetry Layer
-- pynvml GPU monitoring
-- VRAM + temperature tracking
-- Real-time system metrics
-
----
-
-## 🛠️ Deployment
-
-Backend:
-- Ollama runtime
-
-Requirements:
-- Windows / Linux
-- NVIDIA GPU (4GB VRAM minimum tested)
-- Python 3.10+
-
-Config files:
-- config.yaml
-- personality_matrix.json
+### 💡 Advanced Note for Legacy Bare-Metal Compilation
+While the main pipeline relies on Ollama for fast deployment, advanced developers who want to bypass the standard environment and compile/run directly via raw CUDA backends on legacy hardware will face severe Visual Studio/STL compatibility restrictions. A **Special Pascal CUDA Windows Compile Guide** is included in the repository documentation to bridge the MSBuild gaps specifically for the GTX 1050 Ti architecture.
 
 ---
 
 ## 🌍 Design Principles
 
-- Sovereignty over dependency
-- Local-first execution
-- Constraint-driven optimization
-- Deterministic system behavior
+*   **Sovereignty over dependency.**
+*   **Architecture over brute force scaling.**
+*   **Deterministic execution over randomness.**
+*   **Local-first AI computation.**
 
 ---
 
 ## 🎯 Use Cases
 
-- Offline AI systems
-- Privacy-sensitive workloads
-- Education / research environments
-- Low-cost AI experimentation
-- Edge computing setups
+*   🛰️ **Offline AI Systems:** Remote locations, air-gapped environments, or disaster zones.
+*   🔐 **Privacy-Sensitive Workloads:** Secure local data processing with zero external API data leakage.
+*   🔌 **Edge Computing:** Deployments on localized consumer hardware without a cloud connection.
+*   🎓 **Democratizing AI Development:** Giving students and researchers a ready structural guide to build advanced multi-agent networks without a cloud budget.
 
 ---
 
 ## 🧠 Status
 
-Active development (V1 stable)
-
-Planned improvements:
-- Routing optimization
-- Multi-instance execution
-- Context compression layer
-- Latency improvements
+Active development (V1 system stable on legacy consumer hardware).
 
 ---
 
 ## 🔥 Summary
 
-GemmaEdge is a local-first AI reasoning system designed to run advanced multi-agent workflows on constrained consumer hardware without cloud dependency.
+GemmaEdge is a local-first AI reasoning architecture built around a custom semantic execution controller (MishaSelector). It replaces traditional routing with a hybrid scoring inference engine that actively controls model selection, VRAM lifecycle, execution stability and semantic decision boundaries, enabling advanced multi-agent AI systems to run reliably on constrained consumer hardware without cloud dependency.
 
-It proves that architecture > brute force compute when constraints are tight.
+---
+*Every module, every file, and every path is hardcoded with the signature of the 
